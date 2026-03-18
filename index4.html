@@ -1,0 +1,901 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>NEXCORE — 企業級科技基礎設施</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box}
+:root{
+  --navy:#020c18;
+  --navy2:#040f1f;
+  --navy3:#071729;
+  --navy4:#0a2040;
+  --blue:#0d4f8c;
+  --cyan:#00c8ff;
+  --cyan2:#00e5ff;
+  --text:#ddeeff;
+  --muted:#5f90b8;
+  --muted2:#3d6a94;
+  --border:rgba(0,200,255,0.12);
+  --border2:rgba(0,200,255,0.22);
+  --card:rgba(4,15,31,0.9);
+  --radius:6px;
+}
+
+html{scroll-behavior:smooth}
+
+body{
+  background:var(--navy);
+  color:var(--text);
+  font-family:'DM Sans',sans-serif;
+  font-size:15px;
+  line-height:1.75;
+  overflow-x:hidden;
+  cursor:default;
+}
+
+/* ─── BACKGROUND ─────────────────────────────── */
+.bg-grid{
+  position:fixed;inset:0;z-index:0;pointer-events:none;
+  background-image:
+    linear-gradient(rgba(0,200,255,0.025) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(0,200,255,0.025) 1px,transparent 1px);
+  background-size:80px 80px;
+}
+.bg-orb{
+  position:fixed;border-radius:50%;pointer-events:none;z-index:0;
+  filter:blur(100px);
+}
+.orb1{
+  width:700px;height:700px;top:-200px;left:-200px;
+  background:radial-gradient(circle,rgba(0,80,160,0.2),transparent 70%);
+  animation:orbdrift 22s ease-in-out infinite alternate;
+}
+.orb2{
+  width:500px;height:500px;bottom:-100px;right:-100px;
+  background:radial-gradient(circle,rgba(0,180,255,0.12),transparent 70%);
+  animation:orbdrift 28s ease-in-out infinite alternate-reverse;
+}
+.orb3{
+  width:300px;height:300px;top:40%;left:50%;
+  background:radial-gradient(circle,rgba(0,120,200,0.08),transparent 70%);
+  animation:orbdrift 18s ease-in-out infinite alternate;
+}
+@keyframes orbdrift{0%{transform:translate(0,0) scale(1)}100%{transform:translate(40px,25px) scale(1.05)}}
+
+/* ─── NAV ────────────────────────────────────── */
+nav{
+  position:fixed;top:0;width:100%;z-index:200;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 60px;height:68px;
+  background:rgba(2,12,24,0.8);
+  backdrop-filter:blur(20px);
+  border-bottom:1px solid var(--border);
+}
+.logo{
+  font-family:'Syne',sans-serif;font-size:21px;font-weight:800;
+  letter-spacing:-0.5px;
+  background:linear-gradient(90deg,var(--cyan) 0%,rgba(255,255,255,0.9) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+.logo span{
+  -webkit-text-fill-color:rgba(0,200,255,0.4);
+  font-weight:400;font-size:14px;letter-spacing:0.15em;margin-left:2px;
+}
+.nav-links{display:flex;gap:40px;list-style:none}
+.nav-links a{
+  color:var(--muted);text-decoration:none;font-size:12px;
+  letter-spacing:0.12em;text-transform:uppercase;font-weight:500;
+  transition:color 0.2s;position:relative;padding-bottom:2px;
+}
+.nav-links a::after{
+  content:'';position:absolute;bottom:0;left:0;width:0;height:1px;
+  background:var(--cyan);transition:width 0.3s;
+}
+.nav-links a:hover{color:var(--text)}
+.nav-links a:hover::after{width:100%}
+.nav-right{display:flex;align-items:center;gap:20px}
+.nav-status{
+  display:flex;align-items:center;gap:7px;
+  font-size:11px;color:var(--muted);letter-spacing:0.08em;
+}
+.status-dot{
+  width:6px;height:6px;border-radius:50%;background:#00e5a0;
+  box-shadow:0 0 8px #00e5a0;
+  animation:blink 2.5s ease-in-out infinite;
+}
+@keyframes blink{0%,100%{opacity:1}50%{opacity:0.4}}
+.nav-cta{
+  border:1px solid rgba(0,200,255,0.4);color:var(--cyan);
+  padding:9px 22px;border-radius:var(--radius);font-size:12px;
+  cursor:pointer;background:transparent;letter-spacing:0.1em;
+  text-transform:uppercase;font-weight:500;
+  transition:all 0.25s;
+}
+.nav-cta:hover{background:rgba(0,200,255,0.1);border-color:var(--cyan)}
+
+/* ─── SECTION UTILS ─────────────────────────── */
+.z1{position:relative;z-index:1}
+.section-eyebrow{
+  font-size:11px;letter-spacing:0.22em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:20px;
+  display:flex;align-items:center;gap:12px;
+}
+.section-eyebrow::before{
+  content:'';display:block;width:28px;height:1px;background:var(--cyan);
+}
+h2{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(36px,4.5vw,60px);
+  font-weight:800;letter-spacing:-2px;line-height:1.0;
+  margin-bottom:20px;
+}
+.h-divider{
+  height:1px;
+  background:linear-gradient(90deg,transparent 0%,rgba(0,200,255,0.25) 40%,rgba(0,200,255,0.25) 60%,transparent 100%);
+  position:relative;z-index:1;
+}
+
+/* ─── HERO ───────────────────────────────────── */
+.hero{
+  position:relative;z-index:1;min-height:100vh;padding-top:68px;
+  display:grid;grid-template-columns:55% 45%;
+}
+
+/* Left */
+.hero-left{
+  display:flex;flex-direction:column;justify-content:center;
+  padding:80px 60px 80px 60px;position:relative;
+}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:11px;letter-spacing:0.2em;text-transform:uppercase;
+  color:var(--cyan);margin-bottom:32px;
+  border:1px solid var(--border2);border-radius:20px;
+  padding:6px 16px;background:rgba(0,200,255,0.04);
+  width:fit-content;
+}
+.hero-eyebrow .dot{width:5px;height:5px;border-radius:50%;background:var(--cyan)}
+h1{
+  font-family:'Syne',sans-serif;
+  font-size:clamp(52px,6vw,88px);
+  font-weight:800;line-height:0.92;letter-spacing:-3px;
+  margin-bottom:36px;
+}
+h1 .l1{display:block;color:var(--text)}
+h1 .l2{
+  display:block;
+  background:linear-gradient(120deg,var(--cyan) 0%,#5af0ff 40%,rgba(255,255,255,0.95) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;
+  background-clip:text;
+}
+h1 .l3{display:block;color:rgba(255,255,255,0.25);letter-spacing:-2px}
+.hero-desc{
+  color:var(--muted);font-size:16px;line-height:1.85;
+  max-width:440px;margin-bottom:52px;
+  font-weight:300;
+}
+.hero-actions{display:flex;align-items:center;gap:20px;margin-bottom:72px}
+.btn-primary{
+  background:var(--cyan);color:var(--navy);
+  padding:15px 36px;border-radius:var(--radius);
+  font-family:'Syne',sans-serif;font-size:13px;font-weight:700;
+  letter-spacing:0.08em;cursor:pointer;border:none;
+  transition:all 0.25s;
+}
+.btn-primary:hover{background:#fff;box-shadow:0 0 40px rgba(0,200,255,0.3);transform:translateY(-2px)}
+.btn-ghost{
+  display:flex;align-items:center;gap:10px;
+  color:var(--muted);font-size:13px;letter-spacing:0.08em;
+  text-decoration:none;cursor:pointer;border:none;background:none;
+  transition:color 0.2s;
+}
+.btn-ghost:hover{color:var(--text)}
+.btn-ghost .circle{
+  width:32px;height:32px;border-radius:50%;
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:13px;color:var(--cyan);transition:all 0.2s;
+}
+.btn-ghost:hover .circle{background:rgba(0,200,255,0.1);border-color:var(--cyan)}
+
+/* Hero metrics */
+.hero-metrics{
+  display:flex;gap:0;
+  border-top:1px solid var(--border);padding-top:36px;
+}
+.metric{flex:1}
+.metric:not(:last-child){
+  border-right:1px solid var(--border);
+  padding-right:36px;margin-right:36px;
+}
+.metric-val{
+  font-family:'Syne',sans-serif;font-size:36px;font-weight:800;
+  color:var(--cyan);line-height:1;margin-bottom:6px;letter-spacing:-1px;
+}
+.metric-label{font-size:11px;color:var(--muted);letter-spacing:0.1em;text-transform:uppercase}
+
+/* Right */
+.hero-right{
+  position:relative;overflow:hidden;
+  background:linear-gradient(145deg,var(--navy2) 0%,var(--navy3) 100%);
+  clip-path:polygon(10% 0,100% 0,100% 100%,0% 100%);
+}
+.hero-right-inner{
+  position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+}
+.hex-bg{
+  position:absolute;inset:-40px;opacity:0.05;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='70' height='60'%3E%3Cpolygon points='35,2 67,19 67,41 35,58 3,41 3,19' fill='none' stroke='%2300c8ff' stroke-width='1'/%3E%3C/svg%3E");
+  background-size:70px 60px;
+}
+.core-visual{position:relative;display:flex;align-items:center;justify-content:center}
+.ring{
+  border-radius:50%;border:1px solid rgba(0,200,255,0.2);
+  position:absolute;
+  animation:spin linear infinite;
+}
+.ring1{width:320px;height:320px;animation-duration:40s}
+.ring2{width:240px;height:240px;animation-duration:30s;animation-direction:reverse;border-color:rgba(0,200,255,0.15)}
+.ring3{width:160px;height:160px;animation-duration:20s;border-color:rgba(0,200,255,0.25)}
+@keyframes spin{from{transform:rotate(0deg)}to{transform:rotate(360deg)}}
+.ring::before{
+  content:'';position:absolute;top:-3px;left:50%;
+  width:6px;height:6px;border-radius:50%;
+  background:var(--cyan);box-shadow:0 0 12px var(--cyan);
+  transform:translateX(-50%);
+}
+.core-sphere{
+  width:90px;height:90px;border-radius:50%;position:relative;z-index:2;
+  background:radial-gradient(circle at 35% 35%,rgba(0,200,255,0.5),rgba(13,79,140,0.4) 50%,rgba(0,10,30,0.8));
+  border:1px solid rgba(0,200,255,0.5);
+  box-shadow:0 0 40px rgba(0,200,255,0.2),inset 0 0 30px rgba(0,200,255,0.1);
+  animation:pulseSphere 4s ease-in-out infinite;
+}
+@keyframes pulseSphere{0%,100%{box-shadow:0 0 40px rgba(0,200,255,0.2),inset 0 0 30px rgba(0,200,255,0.1)}50%{box-shadow:0 0 80px rgba(0,200,255,0.35),inset 0 0 50px rgba(0,200,255,0.2)}}
+.float-card{
+  position:absolute;
+  background:rgba(4,15,31,0.92);
+  border:1px solid var(--border2);border-radius:8px;
+  padding:12px 18px;backdrop-filter:blur(12px);
+  font-size:12px;letter-spacing:0.04em;
+  animation:floatUD 6s ease-in-out infinite;
+  white-space:nowrap;
+}
+.fc1{top:22%;right:6%;animation-delay:0s}
+.fc2{bottom:28%;left:4%;animation-delay:-3s}
+.fc3{top:60%;right:8%;animation-delay:-1.5s}
+@keyframes floatUD{0%,100%{transform:translateY(0)}50%{transform:translateY(-10px)}}
+.fc-dot{display:inline-block;width:6px;height:6px;border-radius:50%;background:var(--cyan);margin-right:7px;box-shadow:0 0 6px var(--cyan)}
+.fc-label{color:var(--muted);font-size:11px}
+.fc-val{color:var(--text);font-weight:500}
+
+/* ─── PRODUCTS ───────────────────────────────── */
+#products{padding:140px 0 0;position:relative;z-index:1}
+
+.products-header{
+  display:grid;grid-template-columns:1fr 1fr;
+  gap:60px;padding:0 60px;margin-bottom:80px;align-items:end;
+}
+.products-right-head{
+  display:flex;flex-direction:column;justify-content:flex-end;
+}
+.products-desc{
+  color:var(--muted);font-size:16px;line-height:1.85;
+  font-weight:300;margin-bottom:28px;
+}
+.view-all{
+  display:inline-flex;align-items:center;gap:10px;
+  font-size:12px;letter-spacing:0.12em;text-transform:uppercase;
+  color:var(--cyan);text-decoration:none;
+  border-bottom:1px solid rgba(0,200,255,0.3);
+  padding-bottom:4px;transition:all 0.2s;width:fit-content;
+}
+.view-all:hover{border-color:var(--cyan)}
+
+/* Asymmetric product grid */
+.products-grid{
+  display:grid;
+  grid-template-columns:1.6fr 1fr 1fr;
+  grid-template-rows:320px 240px;
+  gap:1px;
+  background:var(--border);
+  border-top:1px solid var(--border);
+}
+.prod-card{
+  background:var(--navy);
+  padding:48px 44px;
+  position:relative;overflow:hidden;
+  cursor:pointer;
+  transition:background 0.35s;
+  display:flex;flex-direction:column;
+  justify-content:space-between;
+}
+.prod-card:hover{background:var(--navy2)}
+.prod-card.featured{
+  grid-row:1/3;grid-column:1;
+  background:var(--navy2);
+  padding:56px 52px;
+}
+.prod-card.featured:hover{background:var(--navy3)}
+
+.prod-glow{
+  position:absolute;pointer-events:none;
+  border-radius:50%;filter:blur(60px);
+  top:-40px;right:-40px;
+  width:180px;height:180px;
+  background:radial-gradient(circle,rgba(0,200,255,0.07),transparent);
+  transition:opacity 0.4s;
+}
+.prod-card.featured .prod-glow{
+  width:280px;height:280px;
+  background:radial-gradient(circle,rgba(0,200,255,0.12),transparent);
+}
+.prod-card:hover .prod-glow{opacity:1.5}
+
+.prod-top{display:flex;align-items:flex-start;justify-content:space-between;margin-bottom:auto}
+.prod-icon-wrap{
+  width:52px;height:52px;
+  border:1px solid var(--border2);border-radius:10px;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,200,255,0.04);
+  transition:border-color 0.3s;
+}
+.prod-card:hover .prod-icon-wrap{border-color:rgba(0,200,255,0.4)}
+.prod-icon{font-size:20px;line-height:1}
+.prod-num{
+  font-family:'Syne',sans-serif;font-size:12px;
+  color:rgba(0,200,255,0.2);letter-spacing:0.15em;
+}
+
+.prod-body{margin-top:auto}
+.prod-tag-wrap{margin-bottom:14px}
+.prod-tag{
+  font-size:10px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--cyan);border:1px solid rgba(0,200,255,0.25);
+  padding:4px 10px;border-radius:2px;background:rgba(0,200,255,0.04);
+}
+h3.prod-title{
+  font-family:'Syne',sans-serif;
+  font-size:20px;font-weight:700;letter-spacing:-0.5px;
+  margin-bottom:10px;color:var(--text);
+}
+.prod-card.featured h3.prod-title{font-size:30px;margin-bottom:16px}
+.prod-desc{
+  color:var(--muted);font-size:13px;line-height:1.75;font-weight:300;
+}
+.prod-card.featured .prod-desc{font-size:15px}
+
+.prod-footer{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:28px;padding-top:20px;
+  border-top:1px solid var(--border);
+}
+.prod-card.featured .prod-footer{margin-top:36px;padding-top:24px}
+.prod-features{display:flex;gap:12px}
+.feat-pill{
+  font-size:11px;color:var(--muted2);
+  background:rgba(0,200,255,0.04);
+  border:1px solid var(--border);
+  padding:3px 10px;border-radius:12px;
+}
+.prod-arrow-btn{
+  width:36px;height:36px;border-radius:50%;
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--muted);font-size:14px;
+  transition:all 0.3s;flex-shrink:0;
+}
+.prod-card:hover .prod-arrow-btn{
+  border-color:var(--cyan);color:var(--cyan);
+  box-shadow:0 0 20px rgba(0,200,255,0.15);
+}
+
+/* ─── ABOUT STRIP ────────────────────────────── */
+#about{
+  position:relative;z-index:1;
+  padding:120px 60px;
+  display:grid;grid-template-columns:1fr 1fr 1fr 1fr;
+  gap:1px;background:var(--border);
+  border-top:1px solid var(--border);
+  border-bottom:1px solid var(--border);
+}
+.about-cell{
+  background:var(--navy);padding:52px 44px;position:relative;overflow:hidden;
+}
+.about-cell.accent{background:var(--navy2)}
+.about-cell:first-child{grid-column:1/3}
+.about-cell h2{font-size:clamp(30px,3vw,48px)}
+.about-cell p{color:var(--muted);font-size:14px;line-height:1.85;font-weight:300;margin-top:20px;max-width:320px}
+.about-num{
+  font-family:'Syne',sans-serif;font-size:56px;font-weight:800;
+  color:var(--cyan);letter-spacing:-3px;line-height:1;margin-bottom:8px;
+}
+.about-num-label{color:var(--muted);font-size:13px;letter-spacing:0.05em}
+.about-icon{
+  font-size:28px;margin-bottom:16px;opacity:0.6;
+}
+
+/* ─── CONTACT ────────────────────────────────── */
+#contact{
+  position:relative;z-index:1;
+  padding:140px 60px;
+  display:grid;grid-template-columns:1fr 1.3fr;
+  gap:100px;align-items:start;
+}
+.contact-left h2{margin-bottom:16px}
+.contact-tagline{
+  color:var(--muted);font-size:16px;line-height:1.85;
+  font-weight:300;margin-bottom:56px;max-width:360px;
+}
+.contact-items{display:flex;flex-direction:column;gap:0}
+.contact-item{
+  display:flex;align-items:center;gap:20px;
+  padding:20px 0;border-bottom:1px solid var(--border);
+}
+.contact-item:first-child{border-top:1px solid var(--border)}
+.ci-icon{
+  width:44px;height:44px;border-radius:8px;
+  border:1px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  color:var(--cyan);font-size:17px;flex-shrink:0;
+  background:rgba(0,200,255,0.03);
+}
+.ci-label{font-size:11px;color:var(--muted);letter-spacing:0.12em;text-transform:uppercase;margin-bottom:3px}
+.ci-val{font-size:14px;color:var(--text)}
+
+/* Form */
+.form-wrap{
+  background:var(--navy2);
+  border:1px solid var(--border);border-radius:12px;
+  padding:48px;
+}
+.form-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-bottom:20px}
+.fg{display:flex;flex-direction:column;gap:8px}
+.fg.full{grid-column:1/3}
+.fg label{
+  font-size:11px;letter-spacing:0.15em;text-transform:uppercase;
+  color:var(--muted);
+}
+.fg input,.fg select,.fg textarea{
+  background:rgba(2,12,24,0.7);
+  border:1px solid var(--border2);border-radius:var(--radius);
+  padding:13px 16px;color:var(--text);
+  font-family:'DM Sans',sans-serif;font-size:14px;
+  outline:none;transition:border-color 0.25s,box-shadow 0.25s;
+  resize:none;appearance:none;
+}
+.fg input::placeholder,.fg textarea::placeholder{color:var(--muted2)}
+.fg input:focus,.fg select:focus,.fg textarea:focus{
+  border-color:rgba(0,200,255,0.5);
+  box-shadow:0 0 0 3px rgba(0,200,255,0.06);
+}
+.fg select option{background:var(--navy3);color:var(--text)}
+.form-bottom{
+  display:flex;align-items:center;justify-content:space-between;
+  margin-top:8px;
+}
+.form-note{font-size:12px;color:var(--muted);display:flex;align-items:center;gap:6px}
+.form-note-dot{width:5px;height:5px;border-radius:50%;background:#00e5a0}
+.btn-submit{
+  background:transparent;
+  border:1px solid rgba(0,200,255,0.5);color:var(--cyan);
+  padding:14px 36px;border-radius:var(--radius);
+  font-family:'Syne',sans-serif;font-size:12px;font-weight:700;
+  letter-spacing:0.12em;text-transform:uppercase;
+  cursor:pointer;transition:all 0.25s;
+}
+.btn-submit:hover{background:var(--cyan);color:var(--navy);box-shadow:0 0 30px rgba(0,200,255,0.25)}
+
+/* ─── FOOTER ─────────────────────────────────── */
+footer{
+  position:relative;z-index:1;
+  border-top:1px solid var(--border);
+  padding:28px 60px;
+  display:flex;align-items:center;justify-content:space-between;
+}
+.footer-links{display:flex;gap:32px;list-style:none}
+.footer-links a{
+  font-size:11px;color:var(--muted2);text-decoration:none;
+  letter-spacing:0.1em;text-transform:uppercase;
+  transition:color 0.2s;
+}
+.footer-links a:hover{color:var(--cyan)}
+.footer-copy{font-size:11px;color:var(--muted2);letter-spacing:0.05em}
+
+/* ─── ANIMATIONS ─────────────────────────────── */
+.reveal{
+  opacity:0;transform:translateY(24px);
+  transition:opacity 0.7s ease,transform 0.7s ease;
+}
+.reveal.in{opacity:1;transform:translateY(0)}
+</style>
+</head>
+<body>
+
+<!-- BG -->
+<div class="bg-grid"></div>
+<div class="bg-orb orb1"></div>
+<div class="bg-orb orb2"></div>
+<div class="bg-orb orb3"></div>
+
+<!-- NAV -->
+<nav>
+  <div class="logo">NEXCORE <span>TECH</span></div>
+  <ul class="nav-links">
+    <li><a href="#products">產品</a></li>
+    <li><a href="#about">關於</a></li>
+    <li><a href="#contact">聯絡</a></li>
+  </ul>
+  <div class="nav-right">
+    <div class="nav-status">
+      <div class="status-dot"></div>
+      所有系統正常運行
+    </div>
+    <button class="nav-cta">免費試用</button>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <!-- Left -->
+  <div class="hero-left">
+    <div class="hero-eyebrow">
+      <span class="dot"></span>
+      企業軟體基礎設施 · 新世代平台
+    </div>
+    <h1>
+      <span class="l1">智能驅動</span>
+      <span class="l2">軟體邊界</span>
+      <span class="l3">無限擴展</span>
+    </h1>
+    <p class="hero-desc">
+      為高速成長的科技企業打造的開發與部署平台。從 API 管理到 AI 推論，一站式整合您的技術棧，讓工程團隊專注於真正重要的事。
+    </p>
+    <div class="hero-actions">
+      <button class="btn-primary">開始免費試用</button>
+      <button class="btn-ghost">觀看演示 <span class="circle">▶</span></button>
+    </div>
+    <div class="hero-metrics">
+      <div class="metric">
+        <div class="metric-val">99.99%</div>
+        <div class="metric-label">SLA 可用性</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">&lt;5ms</div>
+        <div class="metric-label">API 延遲</div>
+      </div>
+      <div class="metric">
+        <div class="metric-val">800+</div>
+        <div class="metric-label">企業客戶</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Right -->
+  <div class="hero-right">
+    <div class="hex-bg"></div>
+    <div class="hero-right-inner">
+      <div class="core-visual">
+        <div class="ring ring1"></div>
+        <div class="ring ring2"></div>
+        <div class="ring ring3"></div>
+        <div class="core-sphere"></div>
+      </div>
+      <div class="float-card fc1">
+        <span class="fc-dot"></span>
+        <span class="fc-label">請求處理速率　</span>
+        <span class="fc-val">12.4M / 秒</span>
+      </div>
+      <div class="float-card fc2">
+        <span class="fc-dot"></span>
+        <span class="fc-label">AI 推論節點　</span>
+        <span class="fc-val">Active × 128</span>
+      </div>
+      <div class="float-card fc3">
+        <span class="fc-dot" style="background:#00e5a0;box-shadow:0 0 6px #00e5a0"></span>
+        <span class="fc-label">異常偵測　</span>
+        <span class="fc-val" style="color:#00e5a0">正常</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div class="h-divider"></div>
+
+<!-- PRODUCTS -->
+<section id="products">
+  <div class="products-header reveal">
+    <div>
+      <div class="section-eyebrow">核心產品</div>
+      <h2>為工程師<br>而生的工具</h2>
+    </div>
+    <div class="products-right-head">
+      <p class="products-desc">
+        從個人開發者到千人工程組織，NEXCORE 提供覆蓋研發全週期的軟體基礎設施——精準、高效、可無縫擴展。
+      </p>
+      <a href="#" class="view-all">瀏覽完整產品線 →</a>
+    </div>
+  </div>
+
+  <div class="products-grid">
+
+    <!-- Featured -->
+    <div class="prod-card featured">
+      <div class="prod-glow"></div>
+      <div class="prod-top">
+        <div class="prod-icon-wrap">
+          <div class="prod-icon">⬡</div>
+        </div>
+        <div class="prod-num">01</div>
+      </div>
+      <div class="prod-body">
+        <div class="prod-tag-wrap"><span class="prod-tag">旗艦平台</span></div>
+        <h3 class="prod-title">智慧 API<br>管理平台</h3>
+        <p class="prod-desc">
+          統一閘道管理所有 REST、GraphQL 與 gRPC 端點。內建流量限速、版本管控、自動文件生成與即時監控儀表板，讓 API 維運效率提升 10 倍。
+        </p>
+        <div class="prod-footer">
+          <div class="prod-features">
+            <span class="feat-pill">自動擴展</span>
+            <span class="feat-pill">A/B 分流</span>
+            <span class="feat-pill">零停機部署</span>
+          </div>
+          <div class="prod-arrow-btn">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 2 -->
+    <div class="prod-card">
+      <div class="prod-glow"></div>
+      <div class="prod-top">
+        <div class="prod-icon-wrap">
+          <div class="prod-icon">◈</div>
+        </div>
+        <div class="prod-num">02</div>
+      </div>
+      <div class="prod-body">
+        <h3 class="prod-title">DevOps<br>自動化引擎</h3>
+        <p class="prod-desc">CI/CD 流水線全自動化，跨雲部署與一鍵回滾。</p>
+        <div class="prod-footer">
+          <div class="prod-features">
+            <span class="feat-pill">Multi-Cloud</span>
+          </div>
+          <div class="prod-arrow-btn">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 3 -->
+    <div class="prod-card">
+      <div class="prod-glow"></div>
+      <div class="prod-top">
+        <div class="prod-icon-wrap">
+          <div class="prod-icon">◬</div>
+        </div>
+        <div class="prod-num">03</div>
+      </div>
+      <div class="prod-body">
+        <h3 class="prod-title">AI 推論<br>服務叢集</h3>
+        <p class="prod-desc">低延遲模型部署，支援 GPU 動態排程與批次推論。</p>
+        <div class="prod-footer">
+          <div class="prod-features">
+            <span class="feat-pill">GPU 優化</span>
+          </div>
+          <div class="prod-arrow-btn">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 4 -->
+    <div class="prod-card">
+      <div class="prod-glow"></div>
+      <div class="prod-top">
+        <div class="prod-icon-wrap">
+          <div class="prod-icon">⬦</div>
+        </div>
+        <div class="prod-num">04</div>
+      </div>
+      <div class="prod-body">
+        <h3 class="prod-title">資安零信任<br>閘道器</h3>
+        <p class="prod-desc">端對端加密，身份驗證與威脅即時偵測攔截。</p>
+        <div class="prod-footer">
+          <div class="prod-features">
+            <span class="feat-pill">SOC2 合規</span>
+          </div>
+          <div class="prod-arrow-btn">→</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Card 5 -->
+    <div class="prod-card">
+      <div class="prod-glow"></div>
+      <div class="prod-top">
+        <div class="prod-icon-wrap">
+          <div class="prod-icon">⬟</div>
+        </div>
+        <div class="prod-num">05</div>
+      </div>
+      <div class="prod-body">
+        <h3 class="prod-title">可觀測性<br>分析平台</h3>
+        <p class="prod-desc">全鏈路追蹤、日誌聚合與異常智能告警。</p>
+        <div class="prod-footer">
+          <div class="prod-features">
+            <span class="feat-pill">OpenTelemetry</span>
+          </div>
+          <div class="prod-arrow-btn">→</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ABOUT STRIP -->
+<section id="about">
+  <div class="about-cell reveal">
+    <div class="section-eyebrow">關於 NEXCORE</div>
+    <h2>我們相信<br>偉大的軟體<br>始於基礎設施</h2>
+    <p>成立於 2018 年，NEXCORE 從一個工程師團隊對基礎設施的執念出發，如今服務全球 800 家以上的科技企業，處理每秒超過千萬次 API 請求。</p>
+  </div>
+  <div class="about-cell accent reveal">
+    <div class="about-icon">⚡</div>
+    <div class="about-num">10×</div>
+    <div class="about-num-label">平均部署效率提升</div>
+  </div>
+  <div class="about-cell reveal">
+    <div class="about-icon">🌏</div>
+    <div class="about-num">28</div>
+    <div class="about-num-label">全球資料中心節點</div>
+  </div>
+  <div class="about-cell accent reveal">
+    <div class="about-icon">🔒</div>
+    <div class="about-num">0</div>
+    <div class="about-num-label">重大資安事件紀錄</div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="contact-left reveal">
+    <div class="section-eyebrow">聯繫我們</div>
+    <h2>讓對話<br>開始</h2>
+    <p class="contact-tagline">
+      無論是方案評估、技術諮詢或合作洽談，我們的解決方案顧問將在一個工作日內與您聯繫。
+    </p>
+    <div class="contact-items">
+      <div class="contact-item">
+        <div class="ci-icon">✉</div>
+        <div>
+          <div class="ci-label">電子郵件</div>
+          <div class="ci-val">hello@nexcore.tw</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">☎</div>
+        <div>
+          <div class="ci-label">服務專線</div>
+          <div class="ci-val">+886 2 8765-4321</div>
+        </div>
+      </div>
+      <div class="contact-item">
+        <div class="ci-icon">◎</div>
+        <div>
+          <div class="ci-label">台灣總部</div>
+          <div class="ci-val">台北市信義區松仁路 100 號 18F</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="form-wrap reveal">
+    <div class="form-grid">
+      <div class="fg">
+        <label>姓名</label>
+        <input type="text" placeholder="您的姓名">
+      </div>
+      <div class="fg">
+        <label>公司名稱</label>
+        <input type="text" placeholder="所屬公司">
+      </div>
+      <div class="fg">
+        <label>電子郵件</label>
+        <input type="email" placeholder="name@company.com">
+      </div>
+      <div class="fg">
+        <label>公司規模</label>
+        <select>
+          <option value="">請選擇人數規模</option>
+          <option>1–10 人</option>
+          <option>11–50 人</option>
+          <option>51–200 人</option>
+          <option>201–1000 人</option>
+          <option>1000 人以上</option>
+        </select>
+      </div>
+      <div class="fg full">
+        <label>洽詢產品</label>
+        <select>
+          <option value="">請選擇感興趣的產品</option>
+          <option>智慧 API 管理平台</option>
+          <option>DevOps 自動化引擎</option>
+          <option>AI 推論服務叢集</option>
+          <option>資安零信任閘道器</option>
+          <option>可觀測性分析平台</option>
+          <option>完整企業方案</option>
+        </select>
+      </div>
+      <div class="fg full">
+        <label>訊息內容</label>
+        <textarea rows="5" placeholder="請描述您的技術需求或挑戰，我們將為您安排最合適的解決方案顧問..."></textarea>
+      </div>
+    </div>
+    <div class="form-bottom">
+      <div class="form-note">
+        <div class="form-note-dot"></div>
+        通常於一個工作日內回覆
+      </div>
+      <button class="btn-submit">送出訊息 →</button>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">NEXCORE <span>TECH</span></div>
+  <ul class="footer-links">
+    <li><a href="#">隱私政策</a></li>
+    <li><a href="#">服務條款</a></li>
+    <li><a href="#">技術文件</a></li>
+    <li><a href="#">狀態頁面</a></li>
+    <li><a href="#">媒體聯絡</a></li>
+  </ul>
+  <div class="footer-copy">© 2026 NEXCORE Technology. 保留所有權利。</div>
+</footer>
+
+<script>
+// Scroll reveal
+const els = document.querySelectorAll('.reveal');
+const obs = new IntersectionObserver(entries => {
+  entries.forEach((e,i) => {
+    if(e.isIntersecting){
+      setTimeout(() => e.target.classList.add('in'), i * 80);
+    }
+  });
+},{threshold:0.1});
+els.forEach(el => obs.observe(el));
+
+// Prod card hover glow follow
+document.querySelectorAll('.prod-card').forEach(card => {
+  card.addEventListener('mousemove', e => {
+    const r = card.getBoundingClientRect();
+    const x = e.clientX - r.left;
+    const y = e.clientY - r.top;
+    const g = card.querySelector('.prod-glow');
+    if(g){g.style.left = (x-90)+'px'; g.style.top = (y-90)+'px';}
+  });
+});
+
+// Form submit
+document.querySelector('.btn-submit').addEventListener('click', () => {
+  const btn = document.querySelector('.btn-submit');
+  btn.textContent = '已送出 ✓';
+  btn.style.background = 'rgba(0,229,160,0.1)';
+  btn.style.borderColor = '#00e5a0';
+  btn.style.color = '#00e5a0';
+  setTimeout(() => {
+    btn.textContent = '送出訊息 →';
+    btn.style.background = '';
+    btn.style.borderColor = '';
+    btn.style.color = '';
+  }, 3000);
+});
+</script>
+</body>
+</html>
